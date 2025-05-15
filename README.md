@@ -65,5 +65,5 @@ View Attendance :
 
 ![Screenshot 2025-05-15 131907](https://github.com/user-attachments/assets/c3605b8b-7b56-47c2-979e-a644edada224)
 
-![Screenshot 2025-05-15 131907](https://github.com/user-attachments/assets/c3605b8b-7b56-47c2-979e-a644edada224)
+![Screenshot 2025-05-15 131950](https://github.com/user-attachments/assets/424a6184-56ce-4a21-878d-073573a46eee)
 
