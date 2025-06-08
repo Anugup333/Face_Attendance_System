@@ -173,9 +173,9 @@ def validate():
                     
                     print(f"✅ Authenticate User {name}")  # Debugging
 
-                    return jsonify({"success": True, "message": f"Autherized User for Access the Attendance {name}", "name": str(name).lower()})
+                    return jsonify({"success": True, "message": f"Autherized User for Download / View Attendance {name}", "name": str(name).lower()})
                 else:
-                    return jsonify({"success": True, "message": f"UnAuthorized User for Access the Attendance {name}", "name": str(name).lower()})
+                    return jsonify({"success": True, "message": f"UnAuthorized User for Download / View the Attendance {name}", "name": str(name).lower()})
 
     return jsonify({"success": False, "message": "Face not recognized!"})
     

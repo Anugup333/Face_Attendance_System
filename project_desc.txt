@@ -1,0 +1,247 @@
+
+
+Face Recognition-Based Attendance System (with Flask & SQLite)
+
+----------------
+Project Overview:
+-----------------
+
+This project is a web-based attendance management system that uses real-time face recognition to register users, mark attendance, and export/view reports. It provides an efficient, touchless method to record attendance using webcam input from a web interface.
+
+
+
+-----------
+Tech Stack:
+-----------
+
+==> Backend: Python (Flask)
+
+==> Frontend: HTML, CSS (with inline styles), JavaScript (Base64 for image transfer)
+
+==> Libraries: face_recognition, OpenCV, NumPy, SQLite3, Pickle
+
+==> Database: SQLite (local storage)
+
+==> Others: CSV generation, base64 (image decoding)
+
+
+--------------------
+Library description 
+--------------------
+
+--------
+1. Flask
+--------
+
+Description: ==>  A lightweight Python web framework.
+
+---------
+Why Used:
+---------
+
+==> To create RESTful routes like /register, /recognize, /export, etc.
+
+==> Serves HTML templates and handles requests/responses between frontend and backend.
+
+--------------------------------------
+Inside of Flask there are some modules  
+--------------------------------------
+
+------------------------
+a) send_file (from Flask)
+------------------------
+
+Description: Flask helper function for sending files to the client.
+
+Used in the /export route to allow the user to download the CSV report of attendance.
+
+
+-------------------------------
+b) render_template (from Flask)
+-------------------------------
+
+Description: Renders HTML files using Flask’s Jinja2 templating.
+
+Used to serve the main homepage (index.html) and view attendance HTML tables.
+
+
+-----------------------
+c) request (from Flask)
+-----------------------
+
+Description: Handles incoming HTTP requests.
+
+Accesses the JSON body and image data sent by users in POST requests.
+
+
+-----------------------
+d) jsonify (from Flask)
+-----------------------
+
+Description: Converts Python dictionaries to JSON format.
+
+Sends structured responses (success, message, etc.) back to the client/browser.
+
+
+
+
+----------------
+2. OpenCV (cv2)
+----------------
+
+
+Description: An open-source computer vision and image processing library.
+
+==> To decode images from byte arrays and process images.
+
+==> Converts base64-encoded images to proper image arrays.
+
+==> Used to read and manipulate images submitted from the frontend.
+
+
+----------------
+3. NumPy (numpy)
+----------------
+
+Description: A library for numerical and array-based operations in Python.
+
+==> Converts decoded image bytes into NumPy arrays for image manipulation using OpenCV.
+
+==> Required format for face detection using face_recognition.
+
+
+-------------------
+4. face_recognition
+-------------------
+
+Description: A high-level Python library built on top of dlib for facial recognition tasks.
+
+==> To detect and extract facial features as encodings.
+
+==> Compares a live face image with stored encodings for recognition and validation.
+
+
+
+-------
+5. os
+-------
+
+Description: Python's standard library for interacting with the operating system.
+
+==> To check and create necessary directories (e.g., static/models).
+
+==> Used to verify whether the Pickle file exists or not.
+
+
+----------
+6. pickle
+----------
+
+Description: A Python module to serialize and deserialize Python objects.
+
+==> Stores the trained face encodings in a .pkl file.
+
+==> Efficiently reloads registered face data when the app restarts.
+
+
+------------
+7. datetime
+------------
+
+Description: A standard library module to work with dates and times.
+
+==> Automatically logs the current date and time when marking attendance.
+
+
+----------
+8. sqlite3
+----------
+
+Description: A built-in Python module to interact with SQLite databases.
+
+==> Stores attendance records in a lightweight local database (attendance.db).
+
+==> Executes SQL queries for inserting, retrieving, and exporting attendance data.
+
+
+
+----------
+9. base64
+----------
+
+Description: A module to encode/decode binary data using Base64.
+
+==> Decodes face images sent from the frontend as Base64-encoded strings.
+
+==> Converts the images back into usable formats for processing.
+
+
+
+
+
+
+------------------------
+Key Functionalities:
+-------------------------
+
+--------------------
+1. Face Registration
+---------------------
+
+==> A user submits their name and captured face image via the frontend.
+
+==> The backend:
+
+	Decodes the image from Base64.
+
+	Detects and encodes the face using the face_recognition library.
+
+	Stores the encoding in a Pickle file if the face is not already registered.
+
+
+
+-----------------------------------------
+2. Face Recognition and Attendance Marking
+-------------------------------------------
+
+==> Users submit their face image for recognition.
+
+==> If a match is found against the stored encodings:
+
+==> The user's name, current date, and time are inserted into the attendance table in SQLite.
+
+==> A success message is returned.
+
+==> Unrecognized or unmatched faces are not logged.
+
+
+
+------------------
+3. User Validation
+------------------
+
+==> A special route checks whether a recognized user is authorized (e.g., admin like Anuj Gupta) to view or export attendance data.
+
+==> This helps secure admin functionalities.
+
+
+
+------------------------------
+4. Attendance Viewing (Webpage)
+-------------------------------
+
+==> A dedicated route renders an HTML page with a styled table showing all attendance logs sorted by latest date and time.
+
+
+
+---------------------------
+5. Attendance Export (CSV)
+---------------------------
+
+==> A separate endpoint allows exporting all attendance records as a downloadable CSV file.
+
+
+
+
+
+
